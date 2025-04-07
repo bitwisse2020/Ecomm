@@ -2,8 +2,8 @@ package com.example.Ecomm.Controller;
 
 
 import com.example.Ecomm.Exception.ProductNotFoundException;
-import com.example.Ecomm.Models.ErrorResponse;
 import com.example.Ecomm.Models.Product;
+import com.example.Ecomm.DTO.ProductRequestPayload;
 import com.example.Ecomm.Service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 
 
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("product")
@@ -37,8 +35,8 @@ public class ProductController {
     }
 
     @PostMapping("/addProduct")
-    public ResponseEntity<Product> addProduct(@RequestBody Product product){
-        Product savedProduct=productService.addProduct(product);
+    public ResponseEntity<Product> addProduct(@RequestBody ProductRequestPayload requestPayload){
+        Product savedProduct=productService.addProduct(requestPayload);
         return ResponseEntity.ok(savedProduct);
     }
 

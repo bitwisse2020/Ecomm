@@ -1,6 +1,7 @@
 package com.example.Ecomm.Service;
 
 import com.example.Ecomm.Models.Product;
+import com.example.Ecomm.DTO.ProductRequestPayload;
 import com.example.Ecomm.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,12 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product addProduct(Product product) {
-        return productRepository.save(product);
+    public Product addProduct(ProductRequestPayload requestPayload) {
+        Product productEntity= Product.builder()
+                .name(requestPayload.getName())
+                .category(requestPayload.getCategory())
+                .price(requestPayload.getPrice()).build();
+        return productRepository.save(productEntity);
     }
 
     public Optional<Product> getProductById(Long id) {
