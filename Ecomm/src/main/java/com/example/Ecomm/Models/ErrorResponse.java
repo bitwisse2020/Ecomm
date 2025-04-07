@@ -4,14 +4,14 @@ package com.example.Ecomm.Models;
 
 import java.time.LocalDateTime;
 
-public class ErrorResponse {
+public class ErrorResponse<T> {
     private LocalDateTime dateTime;
-    private String exceptionMessage;
+    private T exceptionMessage;
     private String message;
 
     public ErrorResponse(LocalDateTime dateTime, String exceptionMessage, String message) {
         this.dateTime = dateTime;
-        this.exceptionMessage = exceptionMessage;
+        this.exceptionMessage = (T) exceptionMessage;
         this.message = message;
     }
 
@@ -23,11 +23,11 @@ public class ErrorResponse {
         this.dateTime = dateTime;
     }
 
-    public String getExceptionMessage() {
+    public T getExceptionMessage() {
         return exceptionMessage;
     }
 
-    public void setExceptionMessage(String exceptionMessage) {
+    public void setExceptionMessage(T exceptionMessage) {
         this.exceptionMessage = exceptionMessage;
     }
 

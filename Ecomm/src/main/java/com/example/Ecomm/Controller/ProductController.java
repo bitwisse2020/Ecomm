@@ -5,6 +5,7 @@ import com.example.Ecomm.Exception.ProductNotFoundException;
 import com.example.Ecomm.Models.Product;
 import com.example.Ecomm.DTO.ProductRequestPayload;
 import com.example.Ecomm.Service.ProductService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class ProductController {
     }
 
     @PostMapping("/addProduct")
-    public ResponseEntity<Product> addProduct(@RequestBody ProductRequestPayload requestPayload){
+    public ResponseEntity<Product> addProduct(@RequestBody @Valid ProductRequestPayload requestPayload){
         Product savedProduct=productService.addProduct(requestPayload);
         return ResponseEntity.ok(savedProduct);
     }
