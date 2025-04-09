@@ -1,7 +1,8 @@
-package com.example.Ecomm.ControllerAdvice;
+package com.example.product_service.ControllerAdvice;
 
-import com.example.Ecomm.Exception.ProductNotFoundException;
-import com.example.Ecomm.Models.ErrorResponse;
+
+import com.example.product_service.Exception.ProductNotFoundException;
+import com.example.product_service.Models.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

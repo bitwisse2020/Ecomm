@@ -1,4 +1,4 @@
-package com.example.Ecomm.Models;
+package com.example.product_service.Models;
 
 
 

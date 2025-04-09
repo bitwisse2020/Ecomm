@@ -1,4 +1,4 @@
-package com.example.Ecomm.Exception;
+package com.example.product_service.Exception;
 
 
 import org.springframework.http.HttpStatus;

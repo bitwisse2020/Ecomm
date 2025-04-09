@@ -1,10 +1,11 @@
-package com.example.Ecomm.Controller;
+package com.example.product_service.Controller;
 
 
-import com.example.Ecomm.Exception.ProductNotFoundException;
-import com.example.Ecomm.Models.Product;
-import com.example.Ecomm.DTO.ProductRequestPayload;
-import com.example.Ecomm.Service.ProductService;
+
+import com.example.product_service.DTO.ProductRequestPayload;
+import com.example.product_service.Exception.ProductNotFoundException;
+import com.example.product_service.Models.Product;
+import com.example.product_service.Service.ProductService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

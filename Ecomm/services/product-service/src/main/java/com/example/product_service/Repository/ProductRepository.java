@@ -1,6 +1,6 @@
-package com.example.Ecomm.Repository;
+package com.example.product_service.Repository;
 
-import com.example.Ecomm.Models.Product;
+import com.example.product_service.Models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

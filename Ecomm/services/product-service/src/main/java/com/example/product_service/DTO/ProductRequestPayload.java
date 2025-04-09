@@ -1,4 +1,4 @@
-package com.example.Ecomm.DTO;
+package com.example.product_service.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.DecimalMax;

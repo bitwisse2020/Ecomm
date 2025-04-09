@@ -1,8 +1,9 @@
-package com.example.Ecomm.Service;
+package com.example.product_service.Service;
 
-import com.example.Ecomm.Models.Product;
-import com.example.Ecomm.DTO.ProductRequestPayload;
-import com.example.Ecomm.Repository.ProductRepository;
+
+import com.example.product_service.DTO.ProductRequestPayload;
+import com.example.product_service.Models.Product;
+import com.example.product_service.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
