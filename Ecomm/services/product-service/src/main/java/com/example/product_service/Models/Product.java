@@ -2,38 +2,57 @@ package com.example.product_service.Models;
 
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 
 @Entity
 @Data
-@Table(name = "PRODUCT.PRODUCT")
+@Table(name = "ECOMM.PRODUCT_SERVICE.Products")
 @AllArgsConstructor(staticName = "builder")
 @NoArgsConstructor
 @Builder
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("id")
     private Long id;
-//    @Column(columnDefinition = "UUID DEFAULT gen_random_uuid()", updatable = false)
-//    private String product_id;
-    @JsonProperty("name")
+
+    @Column(nullable = false)
     private String name;
-    @JsonProperty("category")
-    private String category;
-    @JsonProperty("price")
-    private double price;
 
+    private String description;
 
+    @Column(nullable = false)
+    private BigDecimal price;
+
+    @Column(nullable = false)
+    private Integer stockQuantity;
+
+    @Column(nullable = false)
+    private String sku; // Stock Keeping Unit
+
+    private String imageUrl;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
 }

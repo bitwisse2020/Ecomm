@@ -36,11 +36,11 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping("/addProduct")
-    public ResponseEntity<Product> addProduct(@RequestBody @Valid ProductRequestPayload requestPayload){
-        Product savedProduct=productService.addProduct(requestPayload);
-        return ResponseEntity.ok(savedProduct);
-    }
+    //@PostMapping("/addProduct")
+//    public ResponseEntity<Product> addProduct(@RequestBody @Valid ProductRequestPayload requestPayload){
+//        Product savedProduct=productService.addProduct(requestPayload);
+//        return ResponseEntity.ok(savedProduct);
+//    }
 
     @GetMapping("/getProductById/{id}")
     public ResponseEntity<?> getProductById(@PathVariable("id") Long id) throws ProductNotFoundException {

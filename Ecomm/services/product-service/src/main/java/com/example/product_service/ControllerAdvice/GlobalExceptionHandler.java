@@ -1,8 +1,8 @@
 package com.example.product_service.ControllerAdvice;
 
 
+import com.example.common.models.ErrorResponse;
 import com.example.product_service.Exception.ProductNotFoundException;
-import com.example.product_service.Models.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

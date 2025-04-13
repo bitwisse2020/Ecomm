@@ -19,13 +19,13 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product addProduct(ProductRequestPayload requestPayload) {
-        Product productEntity= Product.builder()
-                .name(requestPayload.getName())
-                .category(requestPayload.getCategory())
-                .price(requestPayload.getPrice()).build();
-        return productRepository.save(productEntity);
-    }
+//    public Product addProduct(ProductRequestPayload requestPayload) {
+//        Product productEntity= Product.builder()
+//                .name(requestPayload.getName())
+//                .category(requestPayload.getCategory())
+//                .price(requestPayload.getPrice()).build();
+//        return productRepository.save(productEntity);
+//    }
 
     public Optional<Product> getProductById(Long id) {
         return productRepository.findById(id);

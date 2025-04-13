@@ -17,6 +17,7 @@
 	<description>Demo Spring Boot Ecommerce Application</description>
 
 	<modules>
+		<module>libs/common</module>
 		<module>services/user-service</module>
 		<module>services/product-service</module>
 		<module>services/order-service</module>
@@ -35,6 +36,11 @@
 				<groupId>org.postgresql</groupId>
 				<artifactId>postgresql</artifactId>
 				<version>${postgresql.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.example</groupId>
+				<artifactId>common</artifactId>
+				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
