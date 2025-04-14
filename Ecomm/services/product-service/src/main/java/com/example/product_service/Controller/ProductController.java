@@ -2,7 +2,9 @@ package com.example.product_service.Controller;
 
 
 
-import com.example.product_service.DTO.ProductRequestPayload;
+import com.example.product_service.DTO.ProductRequest;
+import com.example.product_service.DTO.ProductResponse;
+import com.example.product_service.Exception.CategoryNotFoundException;
 import com.example.product_service.Exception.ProductNotFoundException;
 import com.example.product_service.Models.Product;
 import com.example.product_service.Service.ProductService;
@@ -36,11 +38,11 @@ public class ProductController {
         this.productService = productService;
     }
 
-    //@PostMapping("/addProduct")
-//    public ResponseEntity<Product> addProduct(@RequestBody @Valid ProductRequestPayload requestPayload){
-//        Product savedProduct=productService.addProduct(requestPayload);
-//        return ResponseEntity.ok(savedProduct);
-//    }
+    @PostMapping("/addProduct")
+    public ResponseEntity<ProductResponse> addProduct(@RequestBody @Valid ProductRequest productRequest) throws CategoryNotFoundException {
+        ProductResponse savedProduct=productService.addProduct(productRequest);
+        return ResponseEntity.ok(savedProduct);
+    }
 
     @GetMapping("/getProductById/{id}")
     public ResponseEntity<?> getProductById(@PathVariable("id") Long id) throws ProductNotFoundException {

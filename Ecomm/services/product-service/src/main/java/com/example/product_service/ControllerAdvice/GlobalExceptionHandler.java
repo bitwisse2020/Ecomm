@@ -2,6 +2,7 @@ package com.example.product_service.ControllerAdvice;
 
 
 import com.example.common.models.ErrorResponse;
+import com.example.product_service.Exception.CategoryNotFoundException;
 import com.example.product_service.Exception.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<?> handleProductNotFoundExceptions(ProductNotFoundException exception) {
         ErrorResponse<String> errorResponse = new ErrorResponse<>(LocalDateTime.now(), exception.getMessage(), "Product Not Found");
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<?> handleCategoryNotFoundExceptions(CategoryNotFoundException exception) {
+        ErrorResponse<String> errorResponse = new ErrorResponse<>(LocalDateTime.now(), exception.getMessage(), "Category Not Found");
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 

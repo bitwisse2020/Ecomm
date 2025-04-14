@@ -3,23 +3,32 @@ package com.example.product_service.DTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductRequestPayload {
+public class ProductRequest {
     @NotBlank(message = "Name Cannot be Null")
     @JsonProperty("name")
     private String name;
-    @NotBlank(message = "Category Cannot be Null")
-    @JsonProperty("category")
-    private String category;
-    @DecimalMin(value = "0.01", message = "Price must be at least 0.01")
-    @DecimalMax(value = "10000.00", message = "Price cannot exceed 10000.00")
+    @JsonProperty("description")
+    private String description;
+    @JsonProperty("categoryID")
+    @NotBlank(message = "Category Id Cannot be Null")
+    private Long categoryID;
+    @Positive
     @JsonProperty("price")
-    private double price;
+    private BigDecimal price;
+    @JsonProperty("stock")
+    @Min(0)
+    private Integer stockQuantity;
+    private String imageUrl;
 }
