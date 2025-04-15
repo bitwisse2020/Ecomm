@@ -42,8 +42,6 @@ public class ProductMapperUtils  {
                 .sku(skuGenerator.generateSku(productRequest, category.getName()))
                 .imageUrl(productRequest.getImageUrl())
                 .category(category)
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .build();
     }
 }
