@@ -8,7 +8,6 @@ import com.example.product_service.Service.SKUGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 
 @Component
 public class ProductMapperUtils  {
@@ -17,7 +16,7 @@ public class ProductMapperUtils  {
 
     @Autowired
     public ProductMapperUtils(SKUGenerator skuGenerator) {
-        this.skuGenerator = skuGenerator;
+        ProductMapperUtils.skuGenerator = skuGenerator;
     }
 
 

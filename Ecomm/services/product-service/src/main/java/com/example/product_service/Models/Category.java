@@ -1,13 +1,16 @@
 package com.example.product_service.Models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -37,21 +40,28 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, length = 100)
     private String name;
 
-    private String description;
-    private String imageUrl;
-
-    @Column(nullable = false, unique = true)
+    // URL-friendly identifier derived from the name
+    @Column(nullable = false, unique = true, length = 150)
     private String slug;
 
-    @ManyToOne
-    @JoinColumn(name = "parent_id")
+    @Lob // For potentially long descriptions
+    private String description;
+
+    // Self-referencing relationship for parent category
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_category_id")
     private Category parentCategory;
 
-    @OneToMany(mappedBy = "parent")
+    // One category can have multiple sub-categories
+    @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Category> subCategories = new ArrayList<>();
+
+    // One category can have multiple products
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Product> products = new ArrayList<>();
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -61,4 +71,23 @@ public class Category {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
+    public void addSubCategory(Category subCategory) {
+        subCategories.add(subCategory);
+        subCategory.setParentCategory(this);
+    }
+
+    public void removeSubCategory(Category subCategory) {
+        subCategories.remove(subCategory);
+        subCategory.setParentCategory(null);
+    }
+
+    public void addProduct(Product product) {
+        products.add(product);
+        product.setCategory(this);
+    }
+
+    public void removeProduct(Product product) {
+        products.remove(product);
+        product.setCategory(null);
+    }
 }

@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -20,8 +19,10 @@ public class CategoryResponse {
     private String name;
     private String description;
     private String imageUrl;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String slug;
+    private Long parentCategoryId; // ID of the parent category, null if top-level
+    private String parentCategoryName;
+
 
 //    TODO: Enhancements
 //    For hierarchical categories (optional)
