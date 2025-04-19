@@ -3,6 +3,7 @@ package com.example.product_service.Service;
 
 import com.example.product_service.DTO.ProductRequest;
 import com.example.product_service.DTO.ProductResponse;
+import com.example.product_service.DTO.UpdateProductRequest;
 import com.example.product_service.Exception.CategoryNotFoundException;
 import com.example.product_service.Models.Category;
 import com.example.product_service.Models.Product;
@@ -30,8 +31,8 @@ public class ProductService {
     }
 
     public ProductResponse addProduct(ProductRequest productRequest) throws CategoryNotFoundException {
-        Category category = categoryRepository.findById(productRequest.getCategoryID())
-                .orElseThrow(() -> new CategoryNotFoundException("Category Not Found with id: "+productRequest.getCategoryID()));
+        Category category = categoryRepository.findById(productRequest.getCategoryId())
+                .orElseThrow(() -> new CategoryNotFoundException("Category Not Found with id: "+productRequest.getCategoryId()));
 
         Product productEntity= getProductEntity(productRequest, category);
         Product product=productRepository.save(productEntity);
@@ -47,8 +48,8 @@ public class ProductService {
         return productRepository.findByName(name);
     }
 
-    public Product updateProduct(Product product) {
-        return productRepository.save(product);
+    public Product updateProduct(Long id, UpdateProductRequest updateProductRequest) {
+        return productRepository.save();
     }
 
     public void deleteProductById(Long id) {

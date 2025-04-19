@@ -1,9 +1,9 @@
 package com.example.product_service.Controller;
 
 
-
 import com.example.product_service.DTO.ProductRequest;
 import com.example.product_service.DTO.ProductResponse;
+import com.example.product_service.DTO.UpdateProductRequest;
 import com.example.product_service.Exception.CategoryNotFoundException;
 import com.example.product_service.Exception.ProductNotFoundException;
 import com.example.product_service.Models.Product;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/products")
 public class ProductController {
 
     private final ProductService productService;
@@ -38,31 +38,35 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping("/addProduct")
+    @PostMapping
     public ResponseEntity<ProductResponse> addProduct(@RequestBody @Valid ProductRequest productRequest) throws CategoryNotFoundException {
-        ProductResponse savedProduct=productService.addProduct(productRequest);
+        ProductResponse savedProduct = productService.addProduct(productRequest);
         return ResponseEntity.ok(savedProduct);
     }
 
-    @GetMapping("/getProductById/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getProductById(@PathVariable("id") Long id) throws ProductNotFoundException {
-        Product getProduct= productService.getProductById(id)
-                .orElseThrow(()->new ProductNotFoundException("Product Not Found with id: "+id));;
+        Product getProduct = productService.getProductById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product Not Found with id: " + id));
+        ;
         return ResponseEntity.ok(getProduct);
     }
+
     @GetMapping("/getProductByName/{name}")
     public ResponseEntity<?> getProductByName(@PathVariable("name") String name) throws ProductNotFoundException {
-        Product getProduct= productService.getProductByName(name)
-                .orElseThrow(()->new ProductNotFoundException("Product Not Found with Name: "+name));
+        Product getProduct = productService.getProductByName(name)
+                .orElseThrow(() -> new ProductNotFoundException("Product Not Found with Name: " + name));
         return new ResponseEntity<>(getProduct, HttpStatus.OK);
     }
-    @PutMapping("/updateProduct")
-    public ResponseEntity<Product> updateProduct(@RequestBody Product product){
-        Product updatedProduct= productService.updateProduct(product);
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @Valid @RequestBody UpdateProductRequest productRequest) {
+        Product updatedProduct = productService.updateProduct(id, productRequest);
         return ResponseEntity.ok(updatedProduct);
     }
-    @DeleteMapping("/deleteProductById/{id}")
-    public ResponseEntity<Product> deleteProductById(@PathVariable("id") Long id){
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Product> deleteProductById(@PathVariable("id") Long id) {
         productService.deleteProductById(id);
         return ResponseEntity.ok().build();
     }

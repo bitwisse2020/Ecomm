@@ -4,21 +4,11 @@ import com.example.product_service.DTO.ProductRequest;
 import com.example.product_service.DTO.ProductResponse;
 import com.example.product_service.Models.Category;
 import com.example.product_service.Models.Product;
-import com.example.product_service.Service.SKUGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
 @Component
 public class ProductMapperUtils  {
-
-    private static SKUGenerator skuGenerator;
-
-    @Autowired
-    public ProductMapperUtils(SKUGenerator skuGenerator) {
-        ProductMapperUtils.skuGenerator = skuGenerator;
-    }
-
 
     public static ProductResponse getProductResponse(Product product, Product productEntity) {
         return ProductResponse.builder()
@@ -38,7 +28,8 @@ public class ProductMapperUtils  {
                 .description(productRequest.getDescription())
                 .price(productRequest.getPrice())
                 .stockQuantity(productRequest.getStockQuantity())
-                .sku(skuGenerator.generateSku(productRequest, category.getName()))
+                .sku(SKUGenerator.generateSku(productRequest, category.getName()))
+                .slug(SlugGenerator.generateSlug(productRequest.getName()))
                 .imageUrl(productRequest.getImageUrl())
                 .category(category)
                 .build();
