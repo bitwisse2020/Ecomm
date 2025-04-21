@@ -1,7 +1,7 @@
 package com.example.product_service.Controller;
 
 import com.example.product_service.DTO.CategoryRequest;
-import com.example.product_service.DTO.CategoryResponse;
+import com.example.common.DTO.CategoryResponse;
 import com.example.product_service.Exception.CategoryNotFoundException;
 import com.example.product_service.Service.CategoryService;
 import jakarta.validation.Valid;

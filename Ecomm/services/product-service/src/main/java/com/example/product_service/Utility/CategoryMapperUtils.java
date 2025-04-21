@@ -1,7 +1,7 @@
 package com.example.product_service.Utility;
 
 import com.example.product_service.DTO.CategoryRequest;
-import com.example.product_service.DTO.CategoryResponse;
+import com.example.common.DTO.CategoryResponse;
 import com.example.product_service.Models.Category;
 
 public class CategoryMapperUtils {

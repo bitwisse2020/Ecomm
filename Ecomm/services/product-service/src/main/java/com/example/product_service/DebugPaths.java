@@ -1,6 +1,6 @@
 package com.example.product_service;
 
-import com.example.common.models.ErrorResponse; // Your problematic import
+import com.example.common.Models.ErrorResponse; // Your problematic import
 
 public class DebugPaths {
     public static void main(String[] args) {

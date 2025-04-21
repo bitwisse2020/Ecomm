@@ -1,5 +1,6 @@
 package com.example.product_service.Models;
 
+import com.example.common.Models.BaseCategory;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "ECOMM.PRODUCT_SERVICE.Categories",indexes = {
+@Table(name = "ECOMM.PRODUCT_SERVICE.Categories", indexes = {
         @Index(name = "idx_category_slug", columnList = "slug", unique = true)
 })
 @EntityListeners(AuditingEntityListener.class) // Enables automatic population of @CreatedDate/@LastModifiedDate
@@ -35,7 +36,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Category {
+public class Category implements BaseCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -89,5 +90,16 @@ public class Category {
     public void removeProduct(Product product) {
         products.remove(product);
         product.setCategory(null);
+    }
+
+
+    @Override
+    public Long getParentCategoryId() {
+        return this.getParentCategory() != null ? this.getParentCategory().getId() : null;
+    }
+
+    @Override
+    public String getParentCategoryName() {
+        return this.getParentCategory() != null ? this.getParentCategory().getName() : null;
     }
 }

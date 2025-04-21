@@ -34,7 +34,7 @@ public class ProductRequest {
 
     @NotNull(message = "Stock quantity cannot be null")
     @Min(value = 0, message = "Stock quantity cannot be negative")
-    private Integer stockQuantity;
+    private Integer stock;
 
     @NotNull(message = "Category ID cannot be null")
     private Long categoryId;

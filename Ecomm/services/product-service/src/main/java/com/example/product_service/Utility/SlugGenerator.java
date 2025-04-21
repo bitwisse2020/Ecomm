@@ -14,5 +14,14 @@ public class SlugGenerator {
         String slug = NONLATIN.matcher(normalized).replaceAll("");
         return slug.toLowerCase(Locale.ENGLISH);
     }
+
+    public static String appendSuffix(String baseSlug, int suffix) {
+        if (baseSlug == null || baseSlug.isEmpty()) {
+            // Return just the suffix or handle error appropriately based on requirements
+            return String.valueOf(suffix);
+        }
+        // Appends the suffix number with a preceding hyphen
+        return baseSlug + "-" + suffix;
+    }
 }
 

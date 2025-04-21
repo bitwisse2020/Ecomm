@@ -1,6 +1,7 @@
 package com.example.product_service.Models;
 
 
+import com.example.common.Models.BaseProduct;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -33,7 +34,7 @@ import java.time.Instant;
 @AllArgsConstructor(staticName = "builder")
 @NoArgsConstructor
 @Builder
-public class Product {
+public class Product implements BaseProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -52,7 +53,7 @@ public class Product {
     private BigDecimal price;
 
     @Column(nullable = false)
-    private Integer stockQuantity = 0;
+    private Integer stock = 0;
 
     @Column(nullable = false, unique = true, length = 100)
     private String sku; // Stock Keeping Unit
@@ -70,4 +71,11 @@ public class Product {
 
     @LastModifiedDate
     private Instant updatedAt;
+
+
+    @Override
+    public String getCategoryName() {
+        return category != null ? category.getName() : null;
+    }
+
 }
