@@ -1,6 +1,5 @@
 package com.example.common.Mapper;
 
-
 import com.example.common.DTO.ProductResponse;
 import com.example.common.Models.BaseProduct;
 import org.mapstruct.AfterMapping;
@@ -12,7 +11,6 @@ import org.springframework.data.domain.Page;
 
 @Mapper(
         componentModel = "spring",
-        uses = {CategoryMapper.class}, // For nested mappings
         injectionStrategy = InjectionStrategy.CONSTRUCTOR
 )
 public interface ProductMapper {

@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL) // Exclude null fields in JSON
-public class ProductResponse implements BaseProduct {
+public class ProductResponse {
     private Long id;
     private String name;
     private String description;
@@ -22,5 +22,12 @@ public class ProductResponse implements BaseProduct {
     private Integer stock;
     private String categoryName;
     private String imageUrl;
+
+    //TODO: Find permanent solution and remove the setter from here
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
 }
 

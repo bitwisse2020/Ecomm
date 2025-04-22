@@ -1,7 +1,6 @@
 package com.example.common.DTO;
 
 
-import com.example.common.Models.BaseCategory;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL) // Exclude null fields in JSON
-public class CategoryResponse implements BaseCategory {
+public class CategoryResponse {
     private Long id;
     private String name;
     private String description;
