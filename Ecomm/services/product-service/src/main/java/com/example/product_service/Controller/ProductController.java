@@ -49,14 +49,6 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getProductById(@PathVariable("id") Long id) throws ProductNotFoundException {
-        Product getProduct = productService.getProductById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Product Not Found with id: " + id));
-        ;
-        return ResponseEntity.ok(getProduct);
-    }
-
     @GetMapping("/getProducts")
     public ResponseEntity<?> getProductByName(@RequestParam(required = false) String search,
                                               @PageableDefault(size = 20,sort = "name")Pageable pageable) throws ProductNotFoundException {
@@ -65,6 +57,43 @@ public class ProductController {
             products = productService.getProductByName(search, pageable);
         } else {
             products = productService.getAllProducts(pageable);
+        }
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/getProducts/{idOrSlugOrSku}") // Can accept ID, Slug or SKU
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable String idOrSlugOrSku) throws ProductNotFoundException {
+        ProductResponse productResponse;
+        try {
+            // Trying interpreting as ID first
+            Long id = Long.parseLong(idOrSlugOrSku);
+            productResponse = productService.getProductById(id);
+        } catch (NumberFormatException e) {
+            // If not a number, try finding by slug or SKU
+            try {
+                productResponse = productService.getProductBySlug(idOrSlugOrSku);
+            } catch (ProductNotFoundException slugEx) {
+                // If not found by slug, try SKU
+                productResponse = productService.getProductBySku(idOrSlugOrSku);
+            }
+        }
+        return ResponseEntity.ok(productResponse);
+    }
+
+
+    @GetMapping("/categories/{categoryIdOrSlug}/products")
+    public ResponseEntity<Page<ProductResponse>> getProductsByCategory(
+            @PathVariable String categoryIdOrSlug,
+            @PageableDefault(size = 20, sort = "name") Pageable pageable) throws CategoryNotFoundException {
+
+        Page<ProductResponse> products;
+        try {
+            // Try interpreting as ID first
+            Long categoryId = Long.parseLong(categoryIdOrSlug);
+            products = productService.getProductsByCategoryId(categoryId, pageable);
+        } catch (NumberFormatException e) {
+            // If not a number, assume it's a slug
+            products = productService.getProductsByCategorySlug(categoryIdOrSlug, pageable);
         }
         return ResponseEntity.ok(products);
     }

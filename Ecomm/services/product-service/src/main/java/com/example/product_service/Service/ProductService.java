@@ -21,7 +21,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 
 import static com.example.product_service.Utility.ProductMapperUtils.getProductEntity;
 
@@ -55,22 +54,62 @@ public class ProductService {
     }
 
     public Page<ProductResponse> getAllProducts(Pageable pageable) {
-        Page<Product> products =productRepository.findAll(pageable);
+        Page<Product> products = productRepository.findAll(pageable);
         return productMapper.toResponsePage(products);
     }
 
     @Transactional(readOnly = true)
-    public Optional<Product> getProductById(Long id) {
-        return productRepository.findById(id);
+    public ProductResponse getProductById(Long id) throws ProductNotFoundException {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product Not Found with id: " + id));
+        ;
+        return productMapper.toResponse(product);
     }
 
     @Transactional(readOnly = true)
     public Page<ProductResponse> getProductByName(String keyword, Pageable pageable) {
         logger.debug("Searching products by name containing '{}' with pagination: {}", keyword, pageable);
-        Page<Product> products =productRepository.searchByKeyword(keyword, pageable);
+        Page<Product> products = productRepository.searchByKeyword(keyword, pageable);
         return productMapper.toResponsePage(products);
     }
 
+    @Transactional(readOnly = true)
+    public ProductResponse getProductBySlug(String idOrSlugOrSku) throws ProductNotFoundException {
+        logger.debug("Searching products by slug containing '{}'", idOrSlugOrSku);
+        Product product = (Product) productRepository.findBySlug(idOrSlugOrSku)
+                .orElseThrow(() -> new ProductNotFoundException("Product Not Found with slug: " + idOrSlugOrSku));
+        ;
+        ;
+        return productMapper.toResponse(product);
+    }
+
+    @Transactional(readOnly = true)
+    public ProductResponse getProductBySku(String idOrSlugOrSku) throws ProductNotFoundException {
+        logger.debug("Searching products by sku containing '{}'", idOrSlugOrSku);
+        Product product = (Product) productRepository.findBySku(idOrSlugOrSku)
+                .orElseThrow(() -> new ProductNotFoundException("Product Not Found with slug: " + idOrSlugOrSku));
+        ;
+        ;
+        return productMapper.toResponse(product);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ProductResponse> getProductsByCategoryId(Long categoryId, Pageable pageable) throws CategoryNotFoundException {
+        logger.debug("Fetching products for category ID: {} with pagination: {}", categoryId, pageable);
+        if (!categoryRepository.existsById(categoryId)) {
+            throw new CategoryNotFoundException("Category Not Found with id: " + categoryId);
+        }
+        return productMapper.toResponsePage(productRepository.getProductsByCategoryId(categoryId, pageable));
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ProductResponse> getProductsByCategorySlug(String categorySlug, Pageable pageable) throws CategoryNotFoundException {
+        logger.debug("Fetching products for category slug: {} with pagination: {}", categorySlug, pageable);
+        if (categoryRepository.findBySlug(categorySlug).isEmpty()) {
+            throw new CategoryNotFoundException("Category Not Found with categoryIdOrSlug : " + categorySlug);
+        }
+        return productMapper.toResponsePage(productRepository.getProductsByCategorySlug(categorySlug, pageable));
+    }
 
     @Transactional
     public ProductResponse updateProduct(Long id, UpdateProductRequest updateProductRequest) throws CategoryNotFoundException, ProductNotFoundException, ResourceConflictException {
@@ -154,6 +193,5 @@ public class ProductService {
         }
         return finalSlug;
     }
-
 
 }
