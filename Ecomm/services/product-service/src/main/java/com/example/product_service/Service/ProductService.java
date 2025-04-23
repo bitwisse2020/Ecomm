@@ -41,13 +41,15 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductResponse addProduct(ProductRequest productRequest) throws CategoryNotFoundException {
+    public ProductResponse addProduct(ProductRequest productRequest) throws CategoryNotFoundException, ResourceConflictException {
         logger.info("Attempting to create product with name: {}", productRequest.getName());
 
         Category category = categoryRepository.findById(productRequest.getCategoryId())
                 .orElseThrow(() -> new CategoryNotFoundException("Category Not Found with id: " + productRequest.getCategoryId()));
 
-        Product productEntity = getProductEntity(productRequest, category);
+        String baseSlug = SlugGenerator.generateSlug(productRequest.getName());
+        String finalSlug = ensureUniqueProductSlug(baseSlug, null);
+        Product productEntity = getProductEntity(productRequest, category,finalSlug);
         Product savedProduct = productRepository.save(productEntity);
         logger.info("Successfully created product with ID: {} and slug: {}", savedProduct.getId(), savedProduct.getSlug());
         return productMapper.toResponse(savedProduct);
@@ -74,22 +76,18 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public ProductResponse getProductBySlug(String idOrSlugOrSku) throws ProductNotFoundException {
-        logger.debug("Searching products by slug containing '{}'", idOrSlugOrSku);
-        Product product = (Product) productRepository.findBySlug(idOrSlugOrSku)
-                .orElseThrow(() -> new ProductNotFoundException("Product Not Found with slug: " + idOrSlugOrSku));
-        ;
-        ;
+    public ProductResponse getProductBySlug(String productSlug) throws ProductNotFoundException {
+        logger.debug("Searching products by slug containing '{}'", productSlug);
+        Product product = productRepository.findBySlug(productSlug)
+                .orElseThrow(() -> new ProductNotFoundException("Product Not Found with slug: " + productSlug));
         return productMapper.toResponse(product);
     }
 
     @Transactional(readOnly = true)
-    public ProductResponse getProductBySku(String idOrSlugOrSku) throws ProductNotFoundException {
-        logger.debug("Searching products by sku containing '{}'", idOrSlugOrSku);
-        Product product = (Product) productRepository.findBySku(idOrSlugOrSku)
-                .orElseThrow(() -> new ProductNotFoundException("Product Not Found with slug: " + idOrSlugOrSku));
-        ;
-        ;
+    public ProductResponse getProductBySku(String sku) throws ProductNotFoundException {
+        logger.debug("Searching products by sku containing '{}'", sku);
+        Product product = productRepository.findBySku(sku)
+                .orElseThrow(() -> new ProductNotFoundException("Product Not Found with slug: " + sku));
         return productMapper.toResponse(product);
     }
 

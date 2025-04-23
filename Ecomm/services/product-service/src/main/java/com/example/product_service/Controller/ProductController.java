@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/product")
 public class ProductController {
 
     private final ProductService productService;
@@ -44,7 +44,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductResponse> addProduct(@RequestBody @Valid ProductRequest productRequest) throws CategoryNotFoundException {
+    public ResponseEntity<ProductResponse> addProduct(@RequestBody @Valid ProductRequest productRequest) throws CategoryNotFoundException, ResourceConflictException {
         ProductResponse savedProduct = productService.addProduct(productRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
     }
