@@ -26,7 +26,7 @@ import java.time.Instant;
 
 @Entity
 @Data
-@Table(name = "ECOMM.PRODUCT_SERVICE.products", indexes = {
+@Table(name = "products", indexes = {
         @Index(name = "idx_product_slug", columnList = "slug", unique = true),
         @Index(name = "idx_product_sku", columnList = "sku", unique = true),
         @Index(name = "idx_product_category_id", columnList = "category_id")

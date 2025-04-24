@@ -136,7 +136,7 @@ public class CategoryService {
         if (!categoryRepository.existsById(parentId)) {
             throw new CategoryNotFoundException("Parent Category " +parentId);
         }
-        return categoryMapper.toResponsePage(categoryRepository.findByParentCategoryId(parentId,pageable));
+        return categoryMapper.toResponsePage(categoryRepository.getByParentCategoryId(parentId,pageable));
     }
 
     @Transactional(readOnly = true)

@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "ECOMM.PRODUCT_SERVICE.categories", indexes = {
+@Table(name = "categories", indexes = {
         @Index(name = "idx_category_slug", columnList = "slug", unique = true)
 })
 @EntityListeners(AuditingEntityListener.class) // Enables automatic population of @CreatedDate/@LastModifiedDate
