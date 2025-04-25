@@ -4,6 +4,7 @@ package com.example.product_service.Models;
 import com.example.common.Models.BaseProduct;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +20,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -33,6 +35,7 @@ import java.time.Instant;
 })
 @AllArgsConstructor(staticName = "builder")
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @Builder
 public class Product implements BaseProduct {
     @Id

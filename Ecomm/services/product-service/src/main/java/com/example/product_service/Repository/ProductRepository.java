@@ -1,5 +1,6 @@
 package com.example.product_service.Repository;
 
+import com.example.common.DTO.ProductResponse;
 import com.example.product_service.Models.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,10 +34,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             """, nativeQuery = true)
     Page<Product> getProductsByCategoryId(Long categoryId, Pageable pageable);
 
-    @Query(value = """
-            SELECT * FROM products p
-            INNER JOIN categories c on p.category_id=c.id
-            WHERE c.slug=:categorySlug
-            """, nativeQuery = true)
-    Page<Product> getProductsByCategorySlug(String categorySlug, Pageable pageable);
+    //Have to use JPQL query native query isn't supported
+    @Query("""
+            SELECT new com.example.common.DTO.ProductResponse(
+                    p.id, p.name, p.description, p.price, p.stock,
+                    c.name, p.imageUrl
+                )
+                FROM Product p
+                JOIN p.category c
+                WHERE c.slug = :categorySlug
+            """)
+    Page<ProductResponse> getProductsByCategorySlug(@Param("categorySlug") String categorySlug, Pageable pageable);
 }

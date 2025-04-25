@@ -106,7 +106,7 @@ public class ProductService {
         if (categoryRepository.findBySlug(categorySlug).isEmpty()) {
             throw new CategoryNotFoundException("Category Not Found with categoryIdOrSlug : " + categorySlug);
         }
-        return productMapper.toResponsePage(productRepository.getProductsByCategorySlug(categorySlug, pageable));
+        return productRepository.getProductsByCategorySlug(categorySlug, pageable);
     }
 
     @Transactional

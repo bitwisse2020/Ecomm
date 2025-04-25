@@ -16,7 +16,7 @@ import org.springframework.data.domain.Page;
 public interface ProductMapper {
 
     // Convert Entity → DTO
-    @Mapping(target = "categoryName", source = "product.categoryName")
+    //@Mapping(target = "categoryName", source = "product.categoryName")
     ProductResponse toResponse(BaseProduct product);
 
     default Page<ProductResponse> toResponsePage(Page<? extends BaseProduct> page) {
