@@ -1,4 +1,4 @@
-package com.example.common.DTO;
+package com.example.common.DTO.service_product;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;

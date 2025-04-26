@@ -1,6 +1,6 @@
 package com.example.product_service.Models;
 
-import com.example.common.Models.BaseCategory;
+import com.example.common.Models.service_product.BaseCategory;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

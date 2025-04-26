@@ -1,4 +1,4 @@
-package com.example.common.Models;
+package com.example.common.Models.service_product;
 
 
 import java.math.BigDecimal;

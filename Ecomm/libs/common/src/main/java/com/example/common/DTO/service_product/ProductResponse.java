@@ -1,6 +1,5 @@
-package com.example.common.DTO;
+package com.example.common.DTO.service_product;
 
-import com.example.common.Models.BaseProduct;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

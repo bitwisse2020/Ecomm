@@ -1,8 +1,8 @@
 package com.example.product_service.Service;
 
-import com.example.common.Mapper.CategoryMapper;
+import com.example.common.Mapper.service_product.CategoryMapper;
 import com.example.product_service.DTO.CategoryRequest;
-import com.example.common.DTO.CategoryResponse;
+import com.example.common.DTO.service_product.CategoryResponse;
 import com.example.product_service.DTO.UpdateCategoryRequest;
 import com.example.product_service.Exception.CategoryNotFoundException;
 import com.example.product_service.Exception.ResourceConflictException;
@@ -19,9 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static com.example.product_service.Utility.CategoryMapperUtils.getCategoryEntity;
 

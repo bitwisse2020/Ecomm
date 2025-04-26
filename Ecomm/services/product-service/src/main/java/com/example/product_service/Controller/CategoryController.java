@@ -1,7 +1,7 @@
 package com.example.product_service.Controller;
 
 import com.example.product_service.DTO.CategoryRequest;
-import com.example.common.DTO.CategoryResponse;
+import com.example.common.DTO.service_product.CategoryResponse;
 import com.example.product_service.DTO.UpdateCategoryRequest;
 import com.example.product_service.Exception.CategoryNotFoundException;
 import com.example.product_service.Exception.ResourceConflictException;
@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @Controller
 @RequestMapping("/category")

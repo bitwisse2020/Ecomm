@@ -1,10 +1,9 @@
-package com.example.common.Mapper;
+package com.example.common.Mapper.service_product;
 
 
-import com.example.common.DTO.CategoryResponse;
-import com.example.common.Models.BaseCategory;
+import com.example.common.DTO.service_product.CategoryResponse;
+import com.example.common.Models.service_product.BaseCategory;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;
 
 @Mapper(componentModel = "spring")

@@ -1,12 +1,9 @@
-package com.example.common.Mapper;
+package com.example.common.Mapper.service_product;
 
-import com.example.common.DTO.ProductResponse;
-import com.example.common.Models.BaseProduct;
-import org.mapstruct.AfterMapping;
+import com.example.common.DTO.service_product.ProductResponse;
+import com.example.common.Models.service_product.BaseProduct;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 import org.springframework.data.domain.Page;
 
 @Mapper(

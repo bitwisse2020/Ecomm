@@ -1,7 +1,7 @@
 package com.example.product_service.Models;
 
 
-import com.example.common.Models.BaseProduct;
+import com.example.common.Models.service_product.BaseProduct;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;

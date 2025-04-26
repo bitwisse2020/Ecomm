@@ -1,10 +1,9 @@
 package com.example.product_service.Repository;
 
-import com.example.common.DTO.ProductResponse;
+import com.example.common.DTO.service_product.ProductResponse;
 import com.example.product_service.Models.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Range;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -36,7 +35,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     //Have to use JPQL query native query isn't supported
     @Query("""
-            SELECT new com.example.common.DTO.ProductResponse(
+            SELECT new com.example.common.DTO.service_product.ProductResponse(
                     p.id, p.name, p.description, p.price, p.stock,
                     c.name, p.imageUrl
                 )
