@@ -31,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/product")
 public class ProductController {
@@ -52,7 +54,7 @@ public class ProductController {
     @GetMapping("/getProducts")
     public ResponseEntity<?> getProductByName(@RequestParam(required = false) String search,
                                               @PageableDefault(size = 20,sort = "name")Pageable pageable) throws ProductNotFoundException {
-        Page<ProductResponse> products;
+        List<ProductResponse> products;
         if (search != null && !search.isBlank()) {
             products = productService.getProductByName(search, pageable);
         } else {
@@ -82,15 +84,15 @@ public class ProductController {
 
 
     @GetMapping("/categories/{categoryIdOrSlug}/products")
-    public ResponseEntity<Page<ProductResponse>> getProductsByCategory(
+    public ResponseEntity<?> getProductsByCategory(
             @PathVariable String categoryIdOrSlug,
             @PageableDefault(size = 20, sort = "name") Pageable pageable) throws CategoryNotFoundException {
 
-        Page<ProductResponse> products;
+        List<ProductResponse> products;
         try {
             // Try interpreting as ID first
             Long categoryId = Long.parseLong(categoryIdOrSlug);
-            products = productService.getProductsByCategoryId(categoryId, pageable);
+            products = productService.getProductsByCategoryId(categoryId, pageable).getContent();
         } catch (NumberFormatException e) {
             // If not a number, assume it's a slug
             products = productService.getProductsByCategorySlug(categoryIdOrSlug, pageable);

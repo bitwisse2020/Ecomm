@@ -22,6 +22,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.List;
+
 import static com.example.product_service.Utility.ProductMapperUtils.getProductEntity;
 
 @Service
@@ -55,9 +57,9 @@ public class ProductService {
         return productMapper.toResponse(savedProduct);
     }
 
-    public Page<ProductResponse> getAllProducts(Pageable pageable) {
+    public List<ProductResponse> getAllProducts(Pageable pageable) {
         Page<Product> products = productRepository.findAll(pageable);
-        return productMapper.toResponsePage(products);
+        return productMapper.toResponsePage(products).getContent();
     }
 
     @Transactional(readOnly = true)
@@ -69,10 +71,10 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductResponse> getProductByName(String keyword, Pageable pageable) {
+    public List<ProductResponse> getProductByName(String keyword, Pageable pageable) {
         logger.debug("Searching products by name containing '{}' with pagination: {}", keyword, pageable);
         Page<Product> products = productRepository.searchByKeyword(keyword, pageable);
-        return productMapper.toResponsePage(products);
+        return productMapper.toResponsePage(products).getContent();
     }
 
     @Transactional(readOnly = true)
@@ -101,12 +103,12 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductResponse> getProductsByCategorySlug(String categorySlug, Pageable pageable) throws CategoryNotFoundException {
+    public List<ProductResponse> getProductsByCategorySlug(String categorySlug, Pageable pageable) throws CategoryNotFoundException {
         logger.debug("Fetching products for category slug: {} with pagination: {}", categorySlug, pageable);
         if (categoryRepository.findBySlug(categorySlug).isEmpty()) {
             throw new CategoryNotFoundException("Category Not Found with categoryIdOrSlug : " + categorySlug);
         }
-        return productRepository.getProductsByCategorySlug(categorySlug, pageable);
+        return productRepository.getProductsByCategorySlug(categorySlug, pageable).getContent();
     }
 
     @Transactional

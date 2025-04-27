@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @Controller
 @RequestMapping("/category")
@@ -40,7 +41,7 @@ public class CategoryController {
     public ResponseEntity<?> getAllCategories(
             @RequestParam(value = "type", required = false) String type,
             @PageableDefault(size = 20, sort = "name") Pageable pageable) {
-        Page<CategoryResponse> categories;
+        List<CategoryResponse> categories;
         if ("top-level".equalsIgnoreCase(type)) {
             categories = categoryService.getTopLevelCategories(pageable);
         } else {
@@ -68,7 +69,7 @@ public class CategoryController {
     @GetMapping("/{parentId}/subcategories")
     public ResponseEntity<?> getSubcategories(@PathVariable Long parentId,
                                                                    @PageableDefault(size = 20, sort = "name") Pageable pageable) throws CategoryNotFoundException {
-        Page<CategoryResponse> subcategories = categoryService.getSubCategories(parentId,pageable);
+        List<CategoryResponse> subcategories = categoryService.getSubCategories(parentId,pageable);
         return ResponseEntity.ok(subcategories);
     }
 
