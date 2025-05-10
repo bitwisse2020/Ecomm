@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static com.example.product_service.Utility.CategoryMapperUtils.getCategoryEntity;
@@ -128,13 +129,13 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
-    public Page<CategoryResponse> getSubCategories(Long parentId,Pageable pageable) throws CategoryNotFoundException {
+    public List<CategoryResponse> getSubCategories(Long parentId, Pageable pageable) throws CategoryNotFoundException {
         logger.debug("Attempting to fetch Category by parentCategoryId: {}", parentId);
         // Check if parent exists first
         if (!categoryRepository.existsById(parentId)) {
             throw new CategoryNotFoundException("Parent Category " +parentId);
         }
-        return categoryMapper.toResponsePage(categoryRepository.getByParentCategoryId(parentId,pageable));
+        return categoryMapper.toResponsePage(categoryRepository.getByParentCategoryId(parentId,pageable)).getContent();
     }
 
     @Transactional(readOnly = true)
@@ -154,17 +155,17 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
-    public Page<CategoryResponse> getTopLevelCategories(Pageable pageable) {
+    public List<CategoryResponse> getTopLevelCategories(Pageable pageable) {
         logger.debug("Attempting to fetch top level Categories by page: {}", pageable);
         Page<Category> topLevelCategories = categoryRepository.findByParentCategoryIsNull(pageable);
-        return categoryMapper.toResponsePage(topLevelCategories);
+        return categoryMapper.toResponsePage(topLevelCategories).getContent();
     }
 
     @Transactional(readOnly = true)
-    public Page<CategoryResponse> getAllCategories(Pageable pageable) {
+    public List<CategoryResponse> getAllCategories(Pageable pageable) {
         logger.debug("Attempting to fetch all Categories by page: {}", pageable);
         Page<Category> categories = categoryRepository.findAll(pageable);
-        return categoryMapper.toResponsePage(categories);
+        return categoryMapper.toResponsePage(categories).getContent();
     }
 
     private String ensureUniqueCategorySlug(String baseSlug, Long currentId) throws ResourceConflictException {
